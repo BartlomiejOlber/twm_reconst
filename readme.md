@@ -8,7 +8,7 @@
 
 
 ```
-source twm/set_env_vars.sh
+source set_env_vars.sh
 ```
 
 ## Meshroom reconstruction pipeline
