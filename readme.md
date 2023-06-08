@@ -25,8 +25,7 @@ python meshroom_batch --input imgs/ --pipeline meshroom_pipeline.mg  --output ba
 
 You need to have Blender installed in your OS, that can be run from command line like: `blender`.
 Run the following command to load the reconstructed scene to blender and filter 'background' vertices, leaving solely 
-the Jack Daniels bottle (and a small fragment of the chair the bottle was placed upon).
-bottle 
+the Jack Daniels bottle (and a small fragment of the chair the bottle was placed upon). 
 ```
 blender --python blender_select_vertices_to_cut.py
 ```
