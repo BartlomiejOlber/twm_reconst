@@ -1,0 +1,187 @@
+{
+    "header": {
+        "pipelineVersion": "2.2",
+        "releaseVersion": "2023.1.0",
+        "fileVersion": "1.1",
+        "template": true,
+        "nodesVersions": {
+            "Texturing": "6.0",
+            "ImageMatching": "2.0",
+            "Meshing": "7.0",
+            "CameraInit": "9.0",
+            "ConvertSfMFormat": "2.0",
+            "Publish": "1.2",
+            "FeatureMatching": "2.0",
+            "PrepareDenseScene": "3.0",
+            "StructureFromMotion": "2.0",
+            "DepthMapFilter": "3.0",
+            "FeatureExtraction": "1.1",
+            "MeshFiltering": "3.0",
+            "DepthMap": "3.0"
+        }
+    },
+    "graph": {
+        "Texturing_1": {
+            "nodeType": "Texturing",
+            "position": [
+                2027,
+                -5
+            ],
+            "inputs": {
+                "input": "{Meshing_1.output}",
+                "imagesFolder": "{DepthMap_1.imagesFolder}",
+                "inputMesh": "{MeshFiltering_1.outputMesh}"
+            }
+        },
+        "Meshing_1": {
+            "nodeType": "Meshing",
+            "position": [
+                1600,
+                0
+            ],
+            "inputs": {
+                "input": "{DepthMapFilter_1.input}",
+                "depthMapsFolder": "{DepthMapFilter_1.output}"
+            }
+        },
+        "DepthMapFilter_1": {
+            "nodeType": "DepthMapFilter",
+            "position": [
+                1400,
+                0
+            ],
+            "inputs": {
+                "input": "{DepthMap_1.input}",
+                "depthMapsFolder": "{DepthMap_1.output}"
+            }
+        },
+        "ImageMatching_1": {
+            "nodeType": "ImageMatching",
+            "position": [
+                400,
+                0
+            ],
+            "inputs": {
+                "input": "{FeatureExtraction_1.input}",
+                "featuresFolders": [
+                    "{FeatureExtraction_1.output}"
+                ]
+            }
+        },
+        "FeatureExtraction_1": {
+            "nodeType": "FeatureExtraction",
+            "position": [
+                200,
+                0
+            ],
+            "inputs": {
+                "input": "{CameraInit_1.output}"
+            }
+        },
+        "StructureFromMotion_1": {
+            "nodeType": "StructureFromMotion",
+            "position": [
+                800,
+                0
+            ],
+            "inputs": {
+                "input": "{FeatureMatching_1.input}",
+                "featuresFolders": "{FeatureMatching_1.featuresFolders}",
+                "matchesFolders": [
+                    "{FeatureMatching_1.output}"
+                ],
+                "describerTypes": "{FeatureMatching_1.describerTypes}"
+            }
+        },
+        "PrepareDenseScene_1": {
+            "nodeType": "PrepareDenseScene",
+            "position": [
+                1000,
+                0
+            ],
+            "inputs": {
+                "input": "{StructureFromMotion_1.output}"
+            }
+        },
+        "CameraInit_1": {
+            "nodeType": "CameraInit",
+            "position": [
+                0,
+                0
+            ],
+            "inputs": {}
+        },
+        "DepthMap_1": {
+            "nodeType": "DepthMap",
+            "position": [
+                1200,
+                0
+            ],
+            "inputs": {
+                "input": "{PrepareDenseScene_1.input}",
+                "imagesFolder": "{PrepareDenseScene_1.output}"
+            }
+        },
+        "MeshFiltering_1": {
+            "nodeType": "MeshFiltering",
+            "position": [
+                1800,
+                0
+            ],
+            "inputs": {
+                "inputMesh": "{Meshing_1.outputMesh}"
+            }
+        },
+        "FeatureMatching_1": {
+            "nodeType": "FeatureMatching",
+            "position": [
+                600,
+                0
+            ],
+            "inputs": {
+                "input": "{ImageMatching_1.input}",
+                "featuresFolders": "{ImageMatching_1.featuresFolders}",
+                "imagePairsList": "{ImageMatching_1.output}",
+                "describerTypes": "{FeatureExtraction_1.describerTypes}"
+            }
+        },
+        "Publish_1": {
+            "nodeType": "Publish",
+            "position": [
+                1336,
+                183
+            ],
+            "inputs": {
+                "inputFiles": [
+                    "{ConvertSfMFormat_1.output}"
+                ],
+                "output": "sfm_output"
+            }
+        },
+        "ConvertSfMFormat_1": {
+            "nodeType": "ConvertSfMFormat",
+            "position": [
+                1079,
+                179
+            ],
+            "inputs": {
+                "input": "{StructureFromMotion_1.output}"
+            }
+        },
+        "Publish_2": {
+            "nodeType": "Publish",
+            "position": [
+                2014,
+                192
+            ],
+            "inputs": {
+                "inputFiles": [
+                    "{Texturing_1.outputMesh}",
+                    "{Texturing_1.outputMaterial}",
+                    "{Texturing_1.outputTextures}"
+                ],
+                "output": "textured_mesh_output"
+            }
+        }
+    }
+}
